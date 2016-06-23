@@ -1,10 +1,11 @@
+// require
+var fs = require('fs');
 // 버전정보
 var VERSION = '0.0.1';
 // global context is `window`
 var exportedFuncs = {};
 // 리터럴 형태의 함수만 수집 가능.
 var gather = function (codeString, startOffset) {
-
   var ret = {
     sName: -1,
     eName: -1,
@@ -14,20 +15,18 @@ var gather = function (codeString, startOffset) {
     sReturn: -1,
     eReturn: -1
   };
-
-  var bk = {'{': 0, '}': 0};
-
+  var bk = {
+    '{': 0,
+    '}': 0
+  };
   for (var i = 0; i < codeString.length; i++) {
-
     // function 탐색
     if (ret.sFuncStr === -1 && codeString.slice(i, i + 8) === 'function' && codeString[i - 1] !== '\'') {
       ret.sFuncStr = i;
-
       if (!/\s|\(/.test(codeString[ret.sFuncStr + 8])) {
         // `function` 문자열 다음에는 공백이나 괄호가 있어야 함.
         break;
       }
-
       // function 이름 탐색 -- `var funcName = function..` 일거라는 추측 -- literal
       for (var j = ret.sFuncStr; j >= 0; j--) {
 
@@ -39,16 +38,14 @@ var gather = function (codeString, startOffset) {
         ) {
           ret.eName = j + 1;
         }
-
         if (ret.sName === -1 && ret.eName !== -1 && (/\s|\n/.test(codeString[j - 1]) || j === 0)) {
           ret.sName = j;
           // 루프 탈출
           break;
         }
       }
-
+      // 7 = 'function'.length
       i = i + 7;
-
       // sFunc위치를 찾는다.
       while (true) {
         if (codeString[i] === '{') {
@@ -58,7 +55,7 @@ var gather = function (codeString, startOffset) {
         i++;
       }
     }
-    // 리턴 검사
+    // 리턴 검사, 6 = 'return'.length
     if (codeString.slice(i, i + 6) === 'return') {
       ret.sReturn = i;
       ret.eReturn = i + 6;
@@ -85,6 +82,7 @@ var gather = function (codeString, startOffset) {
   }
   return ret;
 }
+
 var analyzer = function (codeStr, startOffset, endOffset, parents) {
   var codeStr = codeStr.slice(startOffset, endOffset);
   var ret = gather(codeStr);
@@ -102,8 +100,6 @@ var analyzer = function (codeStr, startOffset, endOffset, parents) {
   }
   return ret;
 }
-
-var fs = require('fs');
 
 var exportPrivateFunction = function (args, config, logger, helper) {
   var global = config.outflowPreprocessor.global || 'window';

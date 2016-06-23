@@ -1,5 +1,5 @@
 # karma-outflow-preprocessor
-Extract private test function(only literal decleared function)
+Copy the hidden internal function to be accessible from the outside.
 
 ##Installation
 ```
@@ -15,7 +15,8 @@ module.exports = function(config) {
     '/**/*.js': ['outflow']
   },
   outflowPreprocessor: {
-    global: 'window', // default `window`, if execute on node then use `global` setting.
+    global: 'window', // default : `window`, if you execute on node then use `global` setting.
+    silent: true, // default : `true`, if the silent option is false, this list will be output to the console.
     files: [
       {
         src: './targetFile.js'

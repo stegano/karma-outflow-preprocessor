@@ -27,11 +27,13 @@ var gather = function (codeString, startOffset) {
         // `function` 문자열 다음에는 공백이나 괄호가 있어야 함.
         break;
       }
-      // function 이름 탐색 -- `var funcName = function..` 일거라는 추측 -- literal
+      // function 이름 탐색 -- `var funcName = function..` 일거라는 추측..
       for (var j = ret.sFuncStr; j >= 0; j--) {
-
+        if (/;|}/.test(codeString[j])) {
+          // 만나면 안되는 문자..
+          break;
+        }
         if (ret.eName === -1
-            // `fn = function or fun= function...`
           && ((/\s/.test(codeString[j + 1]) && /=|:/.test(codeString[j + 2])) || (/=|:/.test(codeString[j + 1])))
             // 펑션 이름에 들어갈 수 있는 문자열 `fn = rep || function.., fn: function..` 케이스 제외 코드
           && /\w|\$|_/.test(codeString[j])
@@ -42,6 +44,23 @@ var gather = function (codeString, startOffset) {
           ret.sName = j;
           // 루프 탈출
           break;
+        }
+      }
+      if ((ret.sName === -1 || ret.eName === -1) && codeString[ret.sFuncStr + 8] === ' ') {
+        // 리터럴 형태의 펑션을 찾지 못한 경우, `function name()..`을 탐색한다.
+        for (var k = ret.sFuncStr + 8; k < codeString.length; k++) {
+          if (ret.sName === -1) {
+            if (/\w/.test(codeString[k])) {
+              ret.sName = k;
+            }
+          }
+
+          if (ret.sName !== -1 && ret.eName === -1) {
+            if (/\s|\(/.test(codeString[k + 1])) {
+              ret.eName = k + 1;
+              break;
+            }
+          }
         }
       }
       // 7 = 'function'.length
@@ -61,7 +80,6 @@ var gather = function (codeString, startOffset) {
       ret.eReturn = i + 6;
       i = i + 5;
     }
-
     // 브라켓 검사
     if (ret.sFuncStr !== -1) {
       switch (codeString[i]) {
@@ -81,7 +99,7 @@ var gather = function (codeString, startOffset) {
     }
   }
   return ret;
-}
+};
 
 var analyzer = function (codeStr, startOffset, endOffset, parents) {
   var codeStr = codeStr.slice(startOffset, endOffset);
@@ -99,25 +117,33 @@ var analyzer = function (codeStr, startOffset, endOffset, parents) {
     analyzer(codeStr, ret.sFunc, ret.eFunc, parents);
   }
   return ret;
-}
+};
 
 var exportPrivateFunction = function (args, config, logger, helper) {
   var global = config.outflowPreprocessor.global || 'window';
+  var silent = config.outflowPreprocessor.silent === false ? false : true;
   if (config.outflowPreprocessor) {
     for (var it, i = 0; i < config.outflowPreprocessor.files.length; i++) {
       it = config.outflowPreprocessor.files[i];
       var jsCode = fs.readFileSync(it.src, 'utf8').replace(/^\n/gm, '');
       var funcs = [];
+      var index = [];
       analyzer(jsCode, 0, -1, 'window');
-
       funcs.push(global + '.outflow = {');
+      index.push('\n\n// [Outflow] function Index :D');
+
       for (var n in exportedFuncs) {
         funcs.push('  \'' + n + '\':' + exportedFuncs[n] + ',');
-        console.log('extract -> ' + n);
+        index.push('// outflow[\'' + n + '\']');
+        if (!silent) {
+          console.log('extract -> ' + n);
+        }
       }
       funcs.push('  \'version\': \'' + VERSION + '\'');
       funcs.push('};');
-      fs.writeFileSync(it.dst || it.src.replace(/(\..+)$/, '$1.outflow.js'), jsCode + funcs.join('\n'));
+
+      funcs = funcs.concat(index);
+      fs.writeFileSync(it.dst || it.src.replace(/(\..+)\.js$/, '$1.outflow.js'), jsCode + funcs.join('\n'));
     }
   }
   return function (content, file, done) {

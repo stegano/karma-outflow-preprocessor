@@ -50,7 +50,6 @@ function LegacyFunc() {
    }
   }
 }
-// [Outflow] function Index :D
 window.outflow = {
   'LegacyFunc': function() {
     function privateFunc1() {

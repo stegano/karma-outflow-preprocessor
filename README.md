@@ -28,3 +28,46 @@ module.exports = function(config) {
 }
 ```
 
+## Demo
+```javascript
+// targetFile.js
+function LegacyFunc() {
+  function privateFunc1() {
+   // blah blah blah..
+   function privateFunc2() {
+     // blah blah blah..
+   }
+  }
+}
+```
+```javascript
+// targetFile.outflow.js
+function LegacyFunc() {
+  function privateFunc1() {
+   // blah blah blah..
+   function privateFunc2() {
+     // blah blah blah..
+   }
+  }
+}
+// [Outflow] function Index :D
+window.outflow = {
+  'LegacyFunc': function() {
+    function privateFunc1() {
+     // blah..
+     function privateFunc2() {
+       // blah blah..
+     }
+    }
+  },
+  'LegacyFunc.privateFunc1': function() {
+   // blah..
+   function privateFunc2() {
+     // blah blah..
+   }
+  },
+  'LegacyFunc.privateFunc1.privateFunc2': function() {
+   // blah blah..
+  }
+};
+```

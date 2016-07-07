@@ -77,11 +77,11 @@
   ],
   "name": "karma-outflow-preprocessor",
   "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
+  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stegano/karma-outflow-preprocessor.git"
   },
   "scripts": {},
-  "version": "0.0.1"
+  "version": "0.0.2"
 }

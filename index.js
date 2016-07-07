@@ -1,8 +1,8 @@
 // require
 var fs = require('fs');
-var gather = require('./lib/analyzer');
+var analyzer = require('./lib/analyzer');
 // 버전정보
-var VERSION = '0.0.1';
+var VERSION = '0.0.2';
 // global context is `window`
 var exportedFuncs = {};
 // 리터럴 형태의 함수만 수집 가능.

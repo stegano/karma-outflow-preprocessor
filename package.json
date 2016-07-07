@@ -9,8 +9,7 @@
         "rawSpec": "",
         "spec": "latest",
         "type": "tag"
-      },
-      "/Users/allen.j/workspace/tiara/tiara-clicks/tiara-js/src/karma"
+      }
     ]
   ],
   "_from": "karma-outflow-preprocessor@latest",

@@ -30,7 +30,7 @@ module.exports = function(config) {
 
 ## Demo
 ```javascript
-// targetFile.js
+// `targetFile.js` (original source code)
 function LegacyFunc() {
   function privateFunc1() {
    // blah blah blah..
@@ -41,7 +41,7 @@ function LegacyFunc() {
 }
 ```
 ```javascript
-// targetFile.outflow.js
+// `targetFile.outflow.js` (create source code by outflow-preprocessor)
 function LegacyFunc() {
   function privateFunc1() {
    // blah blah blah..
@@ -51,7 +51,7 @@ function LegacyFunc() {
   }
 }
 window.outflow = {
-  'LegacyFunc': function() {
+  'window.LegacyFunc': function() {
     function privateFunc1() {
      // blah..
      function privateFunc2() {
@@ -59,14 +59,18 @@ window.outflow = {
      }
     }
   },
-  'LegacyFunc.privateFunc1': function() {
+  'window.LegacyFunc.privateFunc1': function() {
    // blah..
    function privateFunc2() {
      // blah blah..
    }
   },
-  'LegacyFunc.privateFunc1.privateFunc2': function() {
+  'window.LegacyFunc.privateFunc1.privateFunc2': function() {
    // blah blah..
   }
 };
+// [Outflow] function Index :D
+// outflow['window.LegacyFunc']
+// outflow['window.LegacyFunc.privateFunc1']
+// outflow['window.LegacyFunc.privateFunc1.privateFunc2']
 ```

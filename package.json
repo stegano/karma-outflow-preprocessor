@@ -1,0 +1,88 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "karma-outflow-preprocessor",
+        "scope": null,
+        "escapedName": "karma-outflow-preprocessor",
+        "name": "karma-outflow-preprocessor",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/allen.j/workspace/tiara/tiara-clicks/tiara-js/src/karma"
+    ]
+  ],
+  "_from": "karma-outflow-preprocessor@latest",
+  "_id": "karma-outflow-preprocessor@0.0.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/karma-outflow-preprocessor",
+  "_nodeVersion": "6.2.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/karma-outflow-preprocessor-0.0.1.tgz_1467076443062_0.28988291253335774"
+  },
+  "_npmUser": {
+    "name": "stegano",
+    "email": "stegano@naver.com"
+  },
+  "_npmVersion": "3.9.6",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "karma-outflow-preprocessor",
+    "scope": null,
+    "escapedName": "karma-outflow-preprocessor",
+    "name": "karma-outflow-preprocessor",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/karma-outflow-preprocessor/-/karma-outflow-preprocessor-0.0.1.tgz",
+  "_shasum": "a79a3fb1a5384c0baeb66c241a49fbdca65dd3fc",
+  "_shrinkwrap": null,
+  "_spec": "karma-outflow-preprocessor",
+  "_where": "/Users/allen.j/workspace/tiara/tiara-clicks/tiara-js/src/karma",
+  "author": {
+    "name": "JUNG YONG WOO"
+  },
+  "bugs": {
+    "url": "https://github.com/stegano/karma-outflow-preprocessor/issues"
+  },
+  "dependencies": {},
+  "description": "Copy the hidden internal function to be accessible from the outside.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "a79a3fb1a5384c0baeb66c241a49fbdca65dd3fc",
+    "tarball": "https://registry.npmjs.org/karma-outflow-preprocessor/-/karma-outflow-preprocessor-0.0.1.tgz"
+  },
+  "gitHead": "d74e17d1cd81262d429056c8139712d181628151",
+  "homepage": "https://github.com/stegano/karma-outflow-preprocessor#readme",
+  "keywords": [
+    "karma",
+    "outflow",
+    "preprocessor",
+    "function private"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "stegano",
+      "email": "stegano@naver.com"
+    }
+  ],
+  "name": "karma-outflow-preprocessor",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stegano/karma-outflow-preprocessor.git"
+  },
+  "scripts": {},
+  "version": "0.0.1"
+}

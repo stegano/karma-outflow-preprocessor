@@ -1,7 +1,7 @@
 # karma-outflow-preprocessor
 Copy the hidden internal function to be accessible from the outside.
 
-##Installation
+## Installation
 ```
 npm install https://github.com/stegano/karma-outflow-preprocessor.git --save-dev
 ```
